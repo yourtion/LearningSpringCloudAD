@@ -8,6 +8,9 @@
     <artifactId>ad</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>ad-eureka</module>
+    </modules>
 
     <name>spring-cloud-ad</name>
     <description>基于 Spring Cloud 微服务架构下广告系统设计与实现</description>
