@@ -1,9 +1,9 @@
+server:
+  port: 8000
+
 spring:
   application:
     name: ad-eureka
-
-server:
-  port: 8000
 
 eureka:
   instance:
