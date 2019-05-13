@@ -14,8 +14,8 @@ spring:
       hibernate.format_sql: true
     open-in-view: false
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/ad_data?autoReconnect=true
-    username: ad_user
+    url: jdbc:mysql://127.0.0.1:3306/ad-data?autoReconnect=true
+    username: ad-user
     password: adPassword123
     tomcat:
       max-active: 4
