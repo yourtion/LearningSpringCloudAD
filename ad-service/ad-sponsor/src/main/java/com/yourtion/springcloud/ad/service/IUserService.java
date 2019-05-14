@@ -11,7 +11,6 @@ public interface IUserService {
 
     /**
      * 创建用户
-     *
      * @param request 请求
      * @return AdUser
      * @throws AdException 创建用户出错
