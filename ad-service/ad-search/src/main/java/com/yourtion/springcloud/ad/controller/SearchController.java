@@ -2,6 +2,7 @@ package com.yourtion.springcloud.ad.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.yourtion.springcloud.ad.annotation.IgnoreResponseAdvice;
+import com.yourtion.springcloud.ad.client.SponsorClient;
 import com.yourtion.springcloud.ad.client.vo.AdPlan;
 import com.yourtion.springcloud.ad.client.vo.AdPlanGetRequest;
 import com.yourtion.springcloud.ad.vo.CommonResponse;
@@ -22,10 +23,19 @@ import java.util.List;
 public class SearchController {
 
     private final RestTemplate restTemplate;
+    private final SponsorClient sponsorClient;
 
     @Autowired
-    public SearchController(RestTemplate restTemplate) {
+    public SearchController(RestTemplate restTemplate, SponsorClient sponsorClient) {
         this.restTemplate = restTemplate;
+        this.sponsorClient = sponsorClient;
+    }
+
+    @IgnoreResponseAdvice
+    @PostMapping("/getAdPlansByFeign")
+    CommonResponse<List<AdPlan>> getAdPlansByFeign(@RequestBody AdPlanGetRequest request) {
+        log.info("getAdPlansByFeign: -> {}", JSON.toJSONString(request));
+        return sponsorClient.getAdPlans(request);
     }
 
     @SuppressWarnings("all")
