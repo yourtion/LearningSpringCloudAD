@@ -25,6 +25,12 @@
 
     <properties>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+        <mysql-connector.version>8.0.15</mysql-connector.version>
+        <commons-codec.version>1.11</commons-codec.version>
+        <commons-collections4.version>4.0</commons-collections4.version>
+        <mysql-binlog-connector.version>0.20.1</mysql-binlog-connector.version>
+        <spring-kafka.version>2.2.6.RELEASE</spring-kafka.version>
+        <fastjson.version>1.2.38</fastjson.version>
     </properties>
 
     <dependencies>
