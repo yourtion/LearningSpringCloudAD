@@ -4,7 +4,7 @@
 
 ### 系统架构
 
-![](ScreenShot1.png)
+![ScreenShot](ScreenShot1.png)
 
 ### 环境参数
 
