@@ -22,13 +22,9 @@ public class CreativeUnitIndex implements IndexAware<String, CreativeUnitObject>
      * adId-unitId, CreativeUnitObject
      */
     private static Map<String, CreativeUnitObject> objectMap;
-    /**
-     * adId, unitId Set
-     */
+    /** adId, unitId Set */
     private static Map<Long, Set<Long>> creativeUnitMap;
-    /**
-     * unitId, adId set
-     */
+    /** unitId, adId set */
     private static Map<Long, Set<Long>> unitCreativeMap;
 
     static {

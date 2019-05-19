@@ -24,10 +24,7 @@ public class UnitItIndex implements IndexAware<String, Set<Long>> {
      * itTag, adUnitId set
      */
     private static Map<String, Set<Long>> itUnitMap;
-
-    /**
-     * unitId, itTag set
-     */
+    /** unitId, itTag set */
     private static Map<Long, Set<String>> unitItMap;
 
     static {
