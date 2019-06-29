@@ -3,23 +3,17 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ad</artifactId>
+        <artifactId>ad-service</artifactId>
         <groupId>com.yourtion.springcloud</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ad-service</artifactId>
+    <artifactId>ad-export</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>ad-common</module>
-        <module>ad-sponsor</module>
-        <module>ad-search</module>
-        <module>ad-export</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <name>ad-service</name>
-    <description>Spring Cloud AD Services</description>
+    <name>ad-export</name>
+    <description>Spring Cloud AD Export Services</description>
 
 </project>
