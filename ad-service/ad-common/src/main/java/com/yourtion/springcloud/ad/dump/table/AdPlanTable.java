@@ -16,6 +16,7 @@ public class AdPlanTable {
 
     private Long id;
     private Long userId;
+    private Integer planStatus;
     private Date startDate;
     private Date endDate;
 }
