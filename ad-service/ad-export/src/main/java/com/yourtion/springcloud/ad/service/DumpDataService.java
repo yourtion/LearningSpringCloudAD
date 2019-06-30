@@ -10,6 +10,7 @@ import com.yourtion.springcloud.ad.dao.unit.AdUnitItRepository;
 import com.yourtion.springcloud.ad.dao.unit.AdUnitKeywordRepository;
 import com.yourtion.springcloud.ad.dao.unit.CreativeUnitRepository;
 import com.yourtion.springcloud.ad.dump.table.AdPlanTable;
+import com.yourtion.springcloud.ad.dump.table.AdUnitTable;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yourtion
@@ -43,9 +45,20 @@ public class DumpDataService {
     @Autowired
     private AdUnitKeywordRepository keywordRepository;
 
+    private void writeToFile(String filename, List list) {
+        var path = Paths.get(filename);
+        try (var writer = Files.newBufferedWriter(path)) {
+            for (var item : list) {
+                writer.write(JSON.toJSONString(item));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            log.error("writeToFile error: " + filename);
+        }
+    }
+
     private void dumpAdPlanTable(String filename) {
         var adPlans = planRepository.findAllByPlanStatus(CommonStatus.VALID.getStatus());
-
         if (CollectionUtils.isEmpty(adPlans)) {
             return;
         }
@@ -55,15 +68,21 @@ public class DumpDataService {
                 planTables.add(new AdPlanTable(p.getId(), p.getUserId(), p.getPlanStatus(), p.getStartDate(), p.getEndDate()))
         );
 
-        var path = Paths.get(filename);
-        try (var writer = Files.newBufferedWriter(path)) {
-            for (var planTable : planTables) {
-                writer.write(JSON.toJSONString(planTable));
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            log.error("dumpAdPlanTable error");
+        writeToFile(filename, planTables);
+    }
+
+    private void dumpAdUnitTable(String filename) {
+        var adUnits = unitRepository.findAllByUnitStatus(CommonStatus.VALID.getStatus());
+        if (CollectionUtils.isEmpty(adUnits)) {
+            return;
         }
+
+        var unitTables = new ArrayList<AdUnitTable>();
+        adUnits.forEach(u ->
+                unitTables.add(new AdUnitTable(u.getId(), u.getUnitStatus(), u.getPositionType(), u.getPlanId()))
+        );
+
+        writeToFile(filename, unitTables);
     }
 
 }

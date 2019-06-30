@@ -16,5 +16,5 @@ public class AdUnitTable {
     private Integer unitStatus;
     private Integer positionType;
 
-    private Integer planId;
+    private Long planId;
 }
