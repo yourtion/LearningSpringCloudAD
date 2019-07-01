@@ -9,9 +9,7 @@ import com.yourtion.springcloud.ad.dao.unit.AdUnitDistrictRepository;
 import com.yourtion.springcloud.ad.dao.unit.AdUnitItRepository;
 import com.yourtion.springcloud.ad.dao.unit.AdUnitKeywordRepository;
 import com.yourtion.springcloud.ad.dao.unit.CreativeUnitRepository;
-import com.yourtion.springcloud.ad.dump.table.AdCreativeTable;
-import com.yourtion.springcloud.ad.dump.table.AdPlanTable;
-import com.yourtion.springcloud.ad.dump.table.AdUnitTable;
+import com.yourtion.springcloud.ad.dump.table.*;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +96,62 @@ public class DumpDataService {
         );
 
         writeToFile(filename, creativeTables);
+    }
+
+    private void dumpAdCreativeUnitTable(String filename) {
+        var creativeUnits = creativeUnitRepository.findAll();
+        if (CollectionUtils.isEmpty(creativeUnits)) {
+            return;
+        }
+
+        var creativeUnitTables = new ArrayList<AdCreativeUnitTable>();
+        creativeUnits.forEach(c ->
+                creativeUnitTables.add(new AdCreativeUnitTable(c.getId(), c.getUnitId()))
+        );
+
+        writeToFile(filename, creativeUnitTables);
+    }
+
+    private void dumpAdUnitDistrictTable(String filename) {
+        var districts = districtRepository.findAll();
+        if (CollectionUtils.isEmpty(districts)) {
+            return;
+        }
+
+        var districtTables = new ArrayList<AdUnitDistrictTable>();
+        districts.forEach(d ->
+                districtTables.add(new AdUnitDistrictTable(d.getId(), d.getProvince(), d.getCity()))
+        );
+
+        writeToFile(filename, districtTables);
+    }
+
+    private void dumpAdUnitItTable(String filename) {
+        var its = itRepository.findAll();
+        if (CollectionUtils.isEmpty(its)) {
+            return;
+        }
+
+        var itTables = new ArrayList<AdUnitItTable>();
+        its.forEach(c ->
+                itTables.add(new AdUnitItTable(c.getId(), c.getItTag()))
+        );
+
+        writeToFile(filename, itTables);
+    }
+
+    private void dumpAdUnitKeywordTable(String filename) {
+        var keywords = keywordRepository.findAll();
+        if (CollectionUtils.isEmpty(keywords)) {
+            return;
+        }
+
+        var keywordTables = new ArrayList<AdUnitKeywordTable>();
+        keywords.forEach(c ->
+                keywordTables.add(new AdUnitKeywordTable(c.getId(), c.getKeyword()))
+        );
+
+        writeToFile(filename, keywordTables);
     }
 
 }
