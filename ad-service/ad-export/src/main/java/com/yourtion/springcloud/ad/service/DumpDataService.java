@@ -9,6 +9,7 @@ import com.yourtion.springcloud.ad.dao.unit.AdUnitDistrictRepository;
 import com.yourtion.springcloud.ad.dao.unit.AdUnitItRepository;
 import com.yourtion.springcloud.ad.dao.unit.AdUnitKeywordRepository;
 import com.yourtion.springcloud.ad.dao.unit.CreativeUnitRepository;
+import com.yourtion.springcloud.ad.dump.table.AdCreativeTable;
 import com.yourtion.springcloud.ad.dump.table.AdPlanTable;
 import com.yourtion.springcloud.ad.dump.table.AdUnitTable;
 import lombok.extern.slf4j.Slf4j;
@@ -83,6 +84,20 @@ public class DumpDataService {
         );
 
         writeToFile(filename, unitTables);
+    }
+
+    private void dumpAdCreativeTable(String filename) {
+        var creatives = creativeRepository.findAll();
+        if (CollectionUtils.isEmpty(creatives)) {
+            return;
+        }
+
+        var creativeTables = new ArrayList<AdCreativeTable>();
+        creatives.forEach(c ->
+                creativeTables.add(new AdCreativeTable(c.getId(), c.getName(), c.getType(), c.getMaterialType(), c.getHeight(), c.getWidth(), c.getAuditStatus(), c.getUrl()))
+        );
+
+        writeToFile(filename, creativeTables);
     }
 
 }
