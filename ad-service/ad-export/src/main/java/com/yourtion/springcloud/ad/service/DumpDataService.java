@@ -9,6 +9,7 @@ import com.yourtion.springcloud.ad.dao.unit.AdUnitDistrictRepository;
 import com.yourtion.springcloud.ad.dao.unit.AdUnitItRepository;
 import com.yourtion.springcloud.ad.dao.unit.AdUnitKeywordRepository;
 import com.yourtion.springcloud.ad.dao.unit.CreativeUnitRepository;
+import com.yourtion.springcloud.ad.dump.DConstant;
 import com.yourtion.springcloud.ad.dump.table.*;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -43,6 +44,20 @@ public class DumpDataService {
     private AdUnitItRepository itRepository;
     @Autowired
     private AdUnitKeywordRepository keywordRepository;
+
+    public void dumpAdTableData() {
+        log.info("dumpAdTableData start");
+
+        dumpAdPlanTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_PLAN));
+        dumpAdUnitTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT));
+        dumpAdCreativeTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_CREATIVE));
+        dumpAdCreativeUnitTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_CREATIVE_UNIT));
+        dumpAdUnitDistrictTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT_DISTRICT));
+        dumpAdUnitDistrictTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT_IT));
+        dumpAdUnitKeywordTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT_KETWORD));
+
+        log.info("dumpAdTableData done");
+    }
 
     private void writeToFile(String filename, List list) {
         var path = Paths.get(filename);

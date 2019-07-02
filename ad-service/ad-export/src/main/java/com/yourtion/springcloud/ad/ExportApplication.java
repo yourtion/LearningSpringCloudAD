@@ -1,6 +1,8 @@
 package com.yourtion.springcloud.ad;
 
 
+import com.yourtion.springcloud.ad.service.DumpDataService;
+import lombok.var;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +12,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ExportApplication {
 
+
     public static void main(String[] args) {
-        SpringApplication.run(ExportApplication.class);
+        var context = SpringApplication.run(ExportApplication.class);
+
+        context.getBean(DumpDataService.class).dumpAdTableData();
+
+        context.close();
     }
 }
