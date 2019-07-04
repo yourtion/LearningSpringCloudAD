@@ -55,7 +55,7 @@ public class DumpDataService {
         dumpAdCreativeTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_CREATIVE));
         dumpAdCreativeUnitTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_CREATIVE_UNIT));
         dumpAdUnitDistrictTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT_DISTRICT));
-        dumpAdUnitDistrictTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT_IT));
+        dumpAdUnitItTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT_IT));
         dumpAdUnitKeywordTable(String.format("%s/%s", DConstant.DATA_ROOT_DIR, DConstant.AD_UNIT_KETWORD));
 
         log.info("dumpAdTableData done");
