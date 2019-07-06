@@ -16,8 +16,10 @@ public class ExportApplication {
     public static void main(String[] args) {
         var context = SpringApplication.run(ExportApplication.class);
 
+        // 执行导出任务
         context.getBean(DumpDataService.class).dumpAdTableData();
 
+        // 退出
         context.close();
     }
 }

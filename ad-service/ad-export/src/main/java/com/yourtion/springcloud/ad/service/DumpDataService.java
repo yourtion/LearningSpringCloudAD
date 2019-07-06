@@ -13,7 +13,6 @@ import com.yourtion.springcloud.ad.dump.DConstant;
 import com.yourtion.springcloud.ad.dump.table.*;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -30,20 +29,23 @@ import java.util.List;
 @Component
 public class DumpDataService {
 
-    @Autowired
-    private AdPlanRepository planRepository;
-    @Autowired
-    private AdUnitRepository unitRepository;
-    @Autowired
-    private CreativeRepository creativeRepository;
-    @Autowired
-    private CreativeUnitRepository creativeUnitRepository;
-    @Autowired
-    private AdUnitDistrictRepository districtRepository;
-    @Autowired
-    private AdUnitItRepository itRepository;
-    @Autowired
-    private AdUnitKeywordRepository keywordRepository;
+    private final AdPlanRepository planRepository;
+    private final AdUnitRepository unitRepository;
+    private final CreativeRepository creativeRepository;
+    private final CreativeUnitRepository creativeUnitRepository;
+    private final AdUnitDistrictRepository districtRepository;
+    private final AdUnitItRepository itRepository;
+    private final AdUnitKeywordRepository keywordRepository;
+
+    public DumpDataService(AdPlanRepository planRepository, AdUnitRepository unitRepository, CreativeRepository creativeRepository, CreativeUnitRepository creativeUnitRepository, AdUnitDistrictRepository districtRepository, AdUnitItRepository itRepository, AdUnitKeywordRepository keywordRepository) {
+        this.planRepository = planRepository;
+        this.unitRepository = unitRepository;
+        this.creativeRepository = creativeRepository;
+        this.creativeUnitRepository = creativeUnitRepository;
+        this.districtRepository = districtRepository;
+        this.itRepository = itRepository;
+        this.keywordRepository = keywordRepository;
+    }
 
     public void dumpAdTableData() {
         log.info("dumpAdTableData start");
