@@ -25,5 +25,5 @@ public class TableTemplate {
     /**
      * 字段索引 -> 字段名
      */
-    private Map<Integer, List<String>> posMap = new HashMap<>();
+    private Map<Integer, String> posMap = new HashMap<>();
 }
