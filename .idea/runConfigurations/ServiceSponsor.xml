@@ -3,7 +3,7 @@
     <module name="ad-sponsor" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.yourtion.springcloud.ad.*" />
+        <option name="PATTERN" value="com.yourtion.springcloud.ad.mysql.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
