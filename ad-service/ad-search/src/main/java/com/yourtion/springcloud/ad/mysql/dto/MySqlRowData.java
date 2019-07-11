@@ -15,7 +15,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MySqlRawData {
+public class MySqlRowData {
 
     private String tableName;
     private String level;
