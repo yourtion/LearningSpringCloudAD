@@ -34,19 +34,16 @@ public class CommonUtils {
     }
 
 
+    /**
+     * 解析日期
+     *
+     * @param dateString 日期字符串（Tue Jan 01 08:00:00 CST 2019）
+     * @return 日期对象
+     */
     public static Date parseStringDate(String dateString) {
-        // Tue Jan 01 08:00:00 CST 2019
         try {
-
-            DateFormat dateFormat = new SimpleDateFormat(
-                    "EEE MMM dd HH:mm:ss zzz yyyy",
-                    Locale.US
-            );
-            return DateUtils.addHours(
-                    dateFormat.parse(dateString),
-                    -8
-            );
-
+            DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+            return DateUtils.addHours(dateFormat.parse(dateString), -8);
         } catch (ParseException ex) {
             log.error("parseStringDate error: {}", dateString);
             return null;
