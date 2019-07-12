@@ -1,10 +1,7 @@
 package com.yourtion.springcloud.ad.sender.index;
 
 import com.alibaba.fastjson.JSON;
-import com.yourtion.springcloud.ad.dump.table.AdCreativeTable;
-import com.yourtion.springcloud.ad.dump.table.AdCreativeUnitTable;
-import com.yourtion.springcloud.ad.dump.table.AdPlanTable;
-import com.yourtion.springcloud.ad.dump.table.AdUnitTable;
+import com.yourtion.springcloud.ad.dump.table.*;
 import com.yourtion.springcloud.ad.handler.AdLevelDataHandler;
 import com.yourtion.springcloud.ad.index.DataLevel;
 import com.yourtion.springcloud.ad.mysql.constant.Constant;
@@ -36,7 +33,7 @@ public class IndexSender implements ISender {
         } else if (DataLevel.LEVEL3.getLevel().equals(level)) {
             level3RowData(rowData);
         } else if (DataLevel.LEVEL4.getLevel().equals(level)) {
-
+            level4RowData(rowData);
         } else {
             log.error("MySQLRowData ERROR: {}", JSON.toJSONString(rowData));
         }
@@ -176,6 +173,90 @@ public class IndexSender implements ISender {
             }
             log.debug("level3RowData: AdCreativeUnitTable -> {}", creativeUnitTables);
             creativeUnitTables.forEach(u -> AdLevelDataHandler.handleLevel3(u, rowData.getOp()));
+        }
+    }
+
+    private void level4RowData(MySqlRowData rowData) {
+
+        switch (rowData.getTableName()) {
+
+            case Constant.AD_UNIT_DISTRICT_TABLE_INFO.TABLE_NAME:
+                List<AdUnitDistrictTable> districtTables = new ArrayList<>();
+
+                for (Map<String, String> fieldValueMap : rowData.getFieldValueMap()) {
+
+                    var districtTable = new AdUnitDistrictTable();
+
+                    fieldValueMap.forEach((k, v) -> {
+                        switch (k) {
+                            case Constant.AD_UNIT_DISTRICT_TABLE_INFO.COLUMN_UNIT_ID:
+                                districtTable.setUnitId(Long.valueOf(v));
+                                break;
+                            case Constant.AD_UNIT_DISTRICT_TABLE_INFO.COLUMN_PROVINCE:
+                                districtTable.setProvince(v);
+                                break;
+                            case Constant.AD_UNIT_DISTRICT_TABLE_INFO.COLUMN_CITY:
+                                districtTable.setCity(v);
+                                break;
+                            default:
+                        }
+                    });
+
+                    districtTables.add(districtTable);
+                }
+                log.debug("level4RowData: AdUnitDistrictTable -> {}", districtTables);
+                districtTables.forEach(d -> AdLevelDataHandler.handleLevel4(d, rowData.getOp()));
+
+                break;
+            case Constant.AD_UNIT_IT_TABLE_INFO.TABLE_NAME:
+                List<AdUnitItTable> itTables = new ArrayList<>();
+
+                for (Map<String, String> fieldValueMap : rowData.getFieldValueMap()) {
+
+                    var itTable = new AdUnitItTable();
+
+                    fieldValueMap.forEach((k, v) -> {
+                        switch (k) {
+                            case Constant.AD_UNIT_IT_TABLE_INFO.COLUMN_UNIT_ID:
+                                itTable.setUnitId(Long.valueOf(v));
+                                break;
+                            case Constant.AD_UNIT_IT_TABLE_INFO.COLUMN_IT_TAG:
+                                itTable.setItTag(v);
+                                break;
+                            default:
+                        }
+                    });
+                    itTables.add(itTable);
+                }
+                log.debug("level4RowData: AdUnitItTable -> {}", itTables);
+                itTables.forEach(i -> AdLevelDataHandler.handleLevel4(i, rowData.getOp()));
+
+                break;
+            case Constant.AD_UNIT_KEYWORD_TABLE_INFO.TABLE_NAME:
+
+                List<AdUnitKeywordTable> keywordTables = new ArrayList<>();
+
+                for (Map<String, String> fieldValueMap : rowData.getFieldValueMap()) {
+                    var keywordTable = new AdUnitKeywordTable();
+
+                    fieldValueMap.forEach((k, v) -> {
+                        switch (k) {
+                            case Constant.AD_UNIT_KEYWORD_TABLE_INFO.COLUMN_UNIT_ID:
+                                keywordTable.setUnitId(Long.valueOf(v));
+                                break;
+                            case Constant.AD_UNIT_KEYWORD_TABLE_INFO.COLUMN_KEYWORD:
+                                keywordTable.setKeyword(v);
+                                break;
+                            default:
+                        }
+                    });
+                    keywordTables.add(keywordTable);
+                }
+                log.debug("level4RowData: AdUnitKeywordTable -> {}", keywordTables);
+                keywordTables.forEach(k -> AdLevelDataHandler.handleLevel4(k, rowData.getOp()));
+
+                break;
+            default:
         }
     }
 }
