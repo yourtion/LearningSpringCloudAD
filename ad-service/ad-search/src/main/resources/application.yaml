@@ -21,6 +21,10 @@ spring:
       max-active: 4
       min-idle: 1
       initial-size: 2
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    listener:
+      concurrency: 4
 
 eureka:
   client:
@@ -45,3 +49,5 @@ adconf:
     password: 123456
     binlogName: ""
     position: -1
+  kafka:
+    topic: ad-search-mysql-data
