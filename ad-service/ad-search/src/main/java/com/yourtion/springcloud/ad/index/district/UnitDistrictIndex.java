@@ -1,14 +1,19 @@
 package com.yourtion.springcloud.ad.index.district;
 
 import com.yourtion.springcloud.ad.index.IndexAware;
+import com.yourtion.springcloud.ad.search.vo.feature.DistrictFeature;
 import com.yourtion.springcloud.ad.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.stream.Collectors;
 
 
 /**
@@ -80,5 +85,18 @@ public class UnitDistrictIndex implements IndexAware<String, Set<Long>> {
         }
 
         log.trace("UnitDistrictIndex, after delete: {}", unitDistrictMap);
+    }
+
+    public boolean match(Long adUnitId, List<DistrictFeature.ProvinceAndCity> districts) {
+
+        if (unitDistrictMap.containsKey(adUnitId) && CollectionUtils.isNotEmpty(unitDistrictMap.get(adUnitId))) {
+            var unitDistricts = unitDistrictMap.get(adUnitId);
+            var targetDistricts = districts.stream()
+                    .map(d -> CommonUtils.stringConcat(d.getProvince(), d.getCity()))
+                    .collect(Collectors.toList());
+
+            return CollectionUtils.isSubCollection(targetDistricts, unitDistricts);
+        }
+        return false;
     }
 }
