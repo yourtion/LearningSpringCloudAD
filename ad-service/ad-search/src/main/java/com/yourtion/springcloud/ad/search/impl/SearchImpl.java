@@ -1,7 +1,13 @@
 package com.yourtion.springcloud.ad.search.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.yourtion.springcloud.ad.index.CommonStatus;
 import com.yourtion.springcloud.ad.index.DataTable;
 import com.yourtion.springcloud.ad.index.adunit.AdUnitIndex;
+import com.yourtion.springcloud.ad.index.adunit.AdUnitObject;
+import com.yourtion.springcloud.ad.index.creative.CreativeIndex;
+import com.yourtion.springcloud.ad.index.creative.CreativeObject;
+import com.yourtion.springcloud.ad.index.creativeunit.CreativeUnitIndex;
 import com.yourtion.springcloud.ad.index.district.UnitDistrictIndex;
 import com.yourtion.springcloud.ad.index.interest.UnitItIndex;
 import com.yourtion.springcloud.ad.index.keyword.UnitKeywordIndex;
@@ -13,17 +19,16 @@ import com.yourtion.springcloud.ad.search.vo.feature.FeatureRelation;
 import com.yourtion.springcloud.ad.search.vo.feature.ItFeature;
 import com.yourtion.springcloud.ad.search.vo.feature.KeywordFeature;
 import com.yourtion.springcloud.ad.search.vo.media.AdSlot;
+import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author yourtion
  */
+@Slf4j
 public class SearchImpl implements ISearch {
 
     @Override
@@ -57,7 +62,20 @@ public class SearchImpl implements ISearch {
             } else {
                 targetUnitIdSet = getOrRelation(adUnitIds, keywordFeature, districtFeature, itFeature);
             }
+
+            var unitObjects = DataTable.of(AdUnitIndex.class).fetch(targetUnitIdSet);
+            filterAdUnitAndPlanStstus(unitObjects, CommonStatus.VALID);
+
+            var adIds = DataTable.of(CreativeUnitIndex.class).selectAds(unitObjects);
+            var creatives = DataTable.of(CreativeIndex.class).fetch(adIds);
+
+            // 通过 AdSlot 实现对 CreativeObject 的过滤
+            filterCreativeByAdSlot(creatives, slot.getWidth(), slot.getHeigjt(), slot.getType());
+
+            adSlot2Ads.put(slot.getAdSlotCode(), buildCreativeResponse(creatives));
         }
+
+        log.info("fetchAds: {} - {}", JSON.toJSONString(request), JSON.toJSONString(response));
         return response;
     }
 
@@ -109,5 +127,36 @@ public class SearchImpl implements ISearch {
             CollectionUtils.filter(adUnitIds,
                     adUnitId -> DataTable.of(UnitItIndex.class).match(adUnitId, itFeature.getIts()));
         }
+    }
+
+    private void filterAdUnitAndPlanStstus(List<AdUnitObject> unitObjects, CommonStatus status) {
+        if (CollectionUtils.isEmpty(unitObjects)) {
+            return;
+        }
+        CollectionUtils.filter(unitObjects,
+                object -> object.getUnitStatus().equals(status.getStatus())
+                        && object.getAdPlanObject().getPlanStatus().equals(status.getStatus())
+        );
+    }
+
+    private void filterCreativeByAdSlot(List<CreativeObject> creatives, Integer width, Integer height, List<Integer> type) {
+        if (CollectionUtils.isEmpty(creatives)) {
+            return;
+        }
+
+        CollectionUtils.filter(creatives, creative ->
+                creative.getAuditStatus().equals(CommonStatus.VALID.getStatus())
+                        && creative.getWidth().equals(width)
+                        && creative.getHeight().equals(height)
+                        && type.contains(creative.getType()));
+    }
+
+    private List<SearchResponse.Creative> buildCreativeResponse(List<CreativeObject> creatives) {
+        if (CollectionUtils.isEmpty(creatives)) {
+            return Collections.emptyList();
+        }
+        // 随机获取
+        var randomObject = creatives.get(Math.abs(new Random().nextInt() % creatives.size()));
+        return Collections.singletonList(SearchResponse.convert(randomObject));
     }
 }
