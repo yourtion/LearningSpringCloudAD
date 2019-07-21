@@ -1,6 +1,7 @@
 package com.yourtion.springcloud.ad.search.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.yourtion.springcloud.ad.index.CommonStatus;
 import com.yourtion.springcloud.ad.index.DataTable;
 import com.yourtion.springcloud.ad.index.adunit.AdUnitIndex;
@@ -31,7 +32,13 @@ import java.util.*;
 @Slf4j
 public class SearchImpl implements ISearch {
 
+    public SearchResponse fallback(SearchRequest request, Throwable e) {
+        return null;
+    }
+
     @Override
+    // 比较少使用HystrixCommand，因为需要在线程池中执行，效率低
+    @HystrixCommand(fallbackMethod = "fallback")
     public SearchResponse fetchAds(SearchRequest request) {
 
         // 请求的广告位信息
