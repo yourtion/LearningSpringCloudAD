@@ -23,6 +23,7 @@ import com.yourtion.springcloud.ad.search.vo.media.AdSlot;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -30,6 +31,7 @@ import java.util.*;
  * @author yourtion
  */
 @Slf4j
+@Service
 public class SearchImpl implements ISearch {
 
     public SearchResponse fallback(SearchRequest request, Throwable e) {
