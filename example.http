@@ -1,0 +1,69 @@
+
+
+# Eureka
+GET http://127.0.0.1:8000/actuator/health
+
+###
+
+# CreateUser
+
+POST http://127.0.0.1:7000/ad-sponsor/create/user
+Content-Type: application/json
+
+{
+  "username": "qinyi"
+}
+
+###
+
+# CreateUser - GateWay
+
+POST http://127.0.0.1:9000/api/ad-sponsor/create/user
+Content-Type: application/json
+
+{
+  "username": "qinyi"
+}
+
+###
+
+# CreateUser - Success
+
+POST http://127.0.0.1:9000/api/ad-sponsor/create/user
+Content-Type: application/json
+
+{
+  "username": "yourtion"
+}
+
+###
+
+# 获取 Ad-Plan
+
+POST http://127.0.0.1:9000/api/ad-sponsor/get/adPlan
+Content-Type: application/json
+
+{
+  "userId": 15,
+  "ids": [
+    10
+  ]
+}
+
+###
+
+# 测试1
+POST http://127.0.0.1:9000/api/ad-search/fetchAds
+Content-Type: application/json
+
+< ad-service/ad-search/src/test/resources/request/request_1.json
+
+###
+
+# 测试2
+POST http://127.0.0.1:9000/api/ad-search/fetchAds
+Content-Type: application/json
+
+< ad-service/ad-search/src/test/resources/request/request_2.json
+
+###
