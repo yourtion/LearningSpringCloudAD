@@ -1,4 +1,4 @@
-
+# 测试前请先导入db.sql中的初始化数据、并执行ad-export创建索引
 
 # Eureka
 GET http://127.0.0.1:8000/actuator/health

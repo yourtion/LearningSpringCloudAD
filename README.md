@@ -15,6 +15,19 @@
 - MySQL 8.0.12 
 - IntelliJ IDEA: 2019.1
 
+![ScreenShot2](ScreenShot2.png)
+
+**测试前请先导入db.sql中的初始化数据、并执行ad-export创建索引**
+
+### 启动顺序
+
+0. ad-export 创建索引
+1. ad-eureka
+2. ad-gateway
+3. ad-sponsor
+4. ad-search
+5. ad-dashboard（选）
+
 ### 内容
 
 #### 广告系统设计思想

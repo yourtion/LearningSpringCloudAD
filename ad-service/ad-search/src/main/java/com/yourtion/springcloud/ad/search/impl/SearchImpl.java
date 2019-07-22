@@ -73,7 +73,7 @@ public class SearchImpl implements ISearch {
             }
 
             var unitObjects = DataTable.of(AdUnitIndex.class).fetch(targetUnitIdSet);
-            filterAdUnitAndPlanStstus(unitObjects, CommonStatus.VALID);
+            filterAdUnitAndPlanStatus(unitObjects, CommonStatus.VALID);
 
             var adIds = DataTable.of(CreativeUnitIndex.class).selectAds(unitObjects);
             var creatives = DataTable.of(CreativeIndex.class).fetch(adIds);
@@ -138,7 +138,7 @@ public class SearchImpl implements ISearch {
         }
     }
 
-    private void filterAdUnitAndPlanStstus(List<AdUnitObject> unitObjects, CommonStatus status) {
+    private void filterAdUnitAndPlanStatus(List<AdUnitObject> unitObjects, CommonStatus status) {
         if (CollectionUtils.isEmpty(unitObjects)) {
             return;
         }
