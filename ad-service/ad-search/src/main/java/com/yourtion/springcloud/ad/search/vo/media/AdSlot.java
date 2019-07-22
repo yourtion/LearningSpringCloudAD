@@ -34,7 +34,7 @@ public class AdSlot {
     /**
      * 高
      */
-    private Integer heigjt;
+    private Integer height;
 
     /**
      * 广告物料类型（视频、图片...）

@@ -137,7 +137,7 @@ public class DumpDataService {
 
         var districtTables = new ArrayList<AdUnitDistrictTable>();
         districts.forEach(d ->
-                districtTables.add(new AdUnitDistrictTable(d.getId(), d.getProvince(), d.getCity()))
+                districtTables.add(new AdUnitDistrictTable(d.getUnitId(), d.getProvince(), d.getCity()))
         );
 
         writeToFile(filename, districtTables);
@@ -151,7 +151,7 @@ public class DumpDataService {
 
         var itTables = new ArrayList<AdUnitItTable>();
         its.forEach(c ->
-                itTables.add(new AdUnitItTable(c.getId(), c.getItTag()))
+                itTables.add(new AdUnitItTable(c.getUnitId(), c.getItTag()))
         );
 
         writeToFile(filename, itTables);
@@ -165,7 +165,7 @@ public class DumpDataService {
 
         var keywordTables = new ArrayList<AdUnitKeywordTable>();
         keywords.forEach(c ->
-                keywordTables.add(new AdUnitKeywordTable(c.getId(), c.getKeyword()))
+                keywordTables.add(new AdUnitKeywordTable(c.getUnitId(), c.getKeyword()))
         );
 
         writeToFile(filename, keywordTables);

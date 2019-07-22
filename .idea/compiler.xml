@@ -9,9 +9,9 @@
         <module name="ad-search" />
         <module name="ad-gateway" />
         <module name="ad-common" />
-        <module name="ad-dashboard" />
         <module name="ad-eureka" />
         <module name="ad-sponsor" />
+        <module name="ad-dashboard" />
         <module name="ad-export" />
       </profile>
     </annotationProcessing>

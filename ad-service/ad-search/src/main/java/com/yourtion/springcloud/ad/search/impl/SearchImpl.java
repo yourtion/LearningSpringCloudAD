@@ -79,7 +79,7 @@ public class SearchImpl implements ISearch {
             var creatives = DataTable.of(CreativeIndex.class).fetch(adIds);
 
             // 通过 AdSlot 实现对 CreativeObject 的过滤
-            filterCreativeByAdSlot(creatives, slot.getWidth(), slot.getHeigjt(), slot.getType());
+            filterCreativeByAdSlot(creatives, slot.getWidth(), slot.getHeight(), slot.getType());
 
             adSlot2Ads.put(slot.getAdSlotCode(), buildCreativeResponse(creatives));
         }
